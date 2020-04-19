@@ -33,12 +33,12 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_it_can_shift
-    skip
+
     enigma = Enigma.new
     key = enigma.keys
     date = enigma.date
 
-    assert_instance_of Hash, enigma.shift('02345', date)
+    assert_equal [8, 27, 34, 45], enigma.shift('02345', date)
   end
 
   def test_it_can_convert_string_to_array
@@ -55,15 +55,8 @@ class EnigmaTest < Minitest::Test
     enigma = Enigma.new
     key = enigma.keys
     date = enigma.date
-
-    assert_equal 0, enigma.encrypt("hello world", "02715", "040895")
-  end
-
-  def test_it_can_rotate_characters
-    enigma = Enigma.new
-    enigma.encrypt("hello world", "02715", "040895")
-
-    assert_equal "keder ohulw", enigma.rotate("hello world", "02715", "040895")
+    hash = {:encryption=>"keder ohulw", :key=>"02715", :date=>"040895"}
+    assert_equal hash, enigma.encrypt("hello world", "02715", "040895")
   end
 
 end

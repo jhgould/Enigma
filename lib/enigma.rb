@@ -52,9 +52,19 @@ class Enigma
       string_keys.map{|num| num.to_i}
   end
 
+  def encrypt(string, key = @key, date = @date)
+    shift_array = shift_array_generator(string, key, date)
+    encryption = rotate(string, shift_array)
+    enigma_code = { encryption: encryption,
+                    key: key,
+                    date: date}
+    # encrip = shift_array(string, key, date)
+    # binding.pry
+  end
+
  #output hash that will have encrypted string key and date
  # h is at index 9 so take index 9 from char set a
-  def encrypt(string, key = @key, date = @date)
+  def shift_array_generator(string, key, date)
     index_values = []
     shift_amount = shift(key, date)
     scan_string = string.split('').join(',').split(",")
@@ -78,14 +88,15 @@ class Enigma
 
   #rotates four seperate character sets based off their key value pair
   #from shift_amount. Will be able to access these to encrypt
-  def rotate(string, key, date)
+
+  def rotate(string, encription_array)
     encrypted_word = []
     string_array = string.split('').join(',').split(",")
-    abc = encrypt(string, key, date)
-    abc.each do |character|
-      nc = @character_set.rotate(character)
-      encrypted_word << nc[0]
-    end
+    # encription_array = encrypt(string, key, date)
+      encription_array.each do |index|
+        nc = @character_set.rotate(index)
+        encrypted_word << nc[0]
+      end
     encrypted_word.join
   end
 end
