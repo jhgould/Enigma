@@ -1,10 +1,11 @@
 require 'pry';
 class Enigma
-  attr_reader :character_set, :date
+  attr_reader :character_set, :date, :key
 
   def initialize
     @character_set = ("a".."z").to_a << " "
     @date = Date.today.strftime("%d%m%y")
+    @key = keys
   end
 
 # creates a 5 digit key and then converts them into strings
@@ -23,6 +24,7 @@ class Enigma
     num.to_s[-4..-1].split(//).map{|chr| chr.to_i}
   end
 
+  #takes the key and date as args and returns a hash
   def shift(key, date)
     shift_keys = [:A, :B, :C, :D]
     key = convert_string_into_array(key)
@@ -31,10 +33,12 @@ class Enigma
       shift_amount = shift_value.map do |num|
          num.sum
       end
-      shift_keys.zip(shift_amount).to_h
+      shift_amount
+      # shift_keys.zip(shift_amount).to_h
   end
 
-
+  # takes key as arg and returns an array of ints that
+  #can be converted to hash in shift method
   def convert_string_into_array(string)
     string_keys = []
       loop do
@@ -48,9 +52,43 @@ class Enigma
       string_keys.map{|num| num.to_i}
   end
 
+ #output hash that will have encrypted string key and date
+ # h is at index 9 so take index 9 from char set a
+  def encrypt(string, key = @key, date = @date)
+    index_values = []
+    shift_amount = shift(key, date)
+    scan_string = string.split('').join(',').split(",")
+      scan_string.each do |character|
+          index_values << @character_set.find_index(character)
+      end
+      index_values
+      new_shift_amount = []
+      while new_shift_amount.length < index_values.length
+        shift_amount.each do |value|
+            new_shift_amount << value
+          end
+      end
+      new_shift_amount
+      full_shift = index_values.zip(new_shift_amount)
+        full_shift_amount = full_shift.map do |num|
+           num.sum
+        end
+      full_shift_amount
+  end
+
+  #rotates four seperate character sets based off their key value pair
+  #from shift_amount. Will be able to access these to encrypt
+  def rotate(string, key, date)
+    encrypted_word = []
+    string_array = string.split('').join(',').split(",")
+    abc = encrypt(string, key, date)
+    abc.each do |character|
+      nc = @character_set.rotate(character)
+      encrypted_word << nc[0]
+    end
+    encrypted_word.join
+  end
 end
-
-
 
 
 
