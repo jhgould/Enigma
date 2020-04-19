@@ -26,7 +26,7 @@ class Enigma
 
   #takes the key and date as args and returns a hash
   def shift(key, date)
-    shift_keys = [:A, :B, :C, :D]
+    # shift_keys = [:A, :B, :C, :D]
     key = convert_string_into_array(key)
     offset = offset(date)
     shift_value = key.zip(offset)
@@ -52,12 +52,13 @@ class Enigma
       string_keys.map{|num| num.to_i}
   end
 
+  #uses two helper methods below to encrypt a string
   def encrypt(string, key = @key, date = @date)
     shift_array = shift_array_generator(string, key, date)
-    encryption = rotate(string, shift_array)
-    enigma_code = { encryption: encryption,
-                    key: key,
-                    date: date}
+      encryption = rotate(string, shift_array)
+        enigma_code = { encryption: encryption,
+                        key: key,
+                        date: date}
     # encrip = shift_array(string, key, date)
     # binding.pry
   end
@@ -99,7 +100,54 @@ class Enigma
       end
     encrypted_word.join
   end
+
+  def decrypt_message(string, encription_array)
+    encrypted_word = []
+    string_array = string.split('').join(',').split(",")
+    # encription_array = encrypt(string, key, date)
+      encription_array.each do |index|
+        nc = @character_set.rotate(index)
+        encrypted_word << nc[0]
+      end
+    encrypted_word.join
+  end
+
+  def shift_array_generator_decrypt(string, key, date)
+    index_values = []
+    shift_amount = shift(key, date)
+    scan_string = string.split('').join(',').split(",")
+      scan_string.each do |character|
+          index_values << @character_set.find_index(character)
+      end
+      index_values
+      new_shift_amount = []
+      while new_shift_amount.length < index_values.length
+        shift_amount.each do |value|
+            new_shift_amount << value
+          end
+      end
+      new_shift_amount
+      full_shift = index_values.zip(new_shift_amount)
+        full_shift_amount = full_shift.map do |num|
+           num[0] - num[1]
+        end
+      full_shift_amount
+  end
+
+
+
+  def decrypt(message, key, date = @date)
+          shift = shift_array_generator_decrypt(message, key, date)
+            decrypted_message = decrypt_message(message, shift)
+    decrypted_enigma_code = {decryption: decrypted_message,
+                             key: key,
+                             date: date}
+  end
+
+
 end
+
+
 
 
 
