@@ -53,12 +53,10 @@ class Enigma
   #uses two helper methods below to encrypt a string
   def encrypt(string, key = @key, date = @date)
     shift_array = shift_array_generator(string, key, date)
-      encryption = rotate(string, shift_array)
+      encryption = encrypt_msg(string, shift_array)
         enigma_code = { encryption: encryption,
                         key: key,
                         date: date}
-    # encrip = shift_array(string, key, date)
-    # binding.pry
   end
 
  #output hash that will have encrypted string key and date
@@ -88,7 +86,7 @@ class Enigma
   #rotates four seperate character sets based off their key value pair
   #from shift_amount. Will be able to access these to encrypt
 
-  def rotate(string, encription_array)
+  def encrypt_msg(string, encription_array)
     encrypted_word = []
     string_array = string.split('').join(',').split(",")
     # encription_array = encrypt(string, key, date)
