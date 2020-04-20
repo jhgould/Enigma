@@ -18,6 +18,7 @@ class EnigmaTest < Minitest::Test
   def test_it_has_readable_attributes
     char_set = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", " "]
 
+  enigma_refactor
     assert_equal char_set, @enigma.character_set
     assert_equal 6, @enigma.date.length
     assert_equal 5, @enigma.key.length
