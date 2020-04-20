@@ -26,7 +26,6 @@ class Enigma
 
   #takes the key and date as args and returns a hash
   def shift(key, date)
-    # shift_keys = [:A, :B, :C, :D]
     key = convert_string_into_array(key)
     offset = offset(date)
     shift_value = key.zip(offset)
@@ -34,7 +33,6 @@ class Enigma
          num.sum
       end
       shift_amount
-      # shift_keys.zip(shift_amount).to_h
   end
 
   # takes key as arg and returns an array of ints that
@@ -134,8 +132,6 @@ class Enigma
       full_shift_amount
   end
 
-
-
   def decrypt(message, key, date = @date)
           shift = shift_array_generator_decrypt(message, key, date)
             decrypted_message = decrypt_message(message, shift)
@@ -143,19 +139,4 @@ class Enigma
                              key: key,
                              date: date}
   end
-
-
 end
-
-
-
-
-
-# shift_value = []
-# key.each do |key_num|
-#   offset.each do |offset_num|
-#     shift_value << key_num + offset_num
-#   end
-# end
-# shift_value
-# binding.pry
