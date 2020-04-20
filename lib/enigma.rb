@@ -139,19 +139,4 @@ class Enigma
                              key: key,
                              date: date}
   end
-
-
 end
-
-
-
-
-
-# shift_value = []
-# key.each do |key_num|
-#   offset.each do |offset_num|
-#     shift_value << key_num + offset_num
-#   end
-# end
-# shift_value
-# binding.pry
