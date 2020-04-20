@@ -27,12 +27,11 @@ class Enigma
   #takes the key and date as args and returns a hash
   def shift(key, date)
     key = convert_string_into_array(key)
-    offset = offset(date)
-    shift_value = key.zip(offset)
-      shift_amount = shift_value.map do |num|
-         num.sum
-      end
-      shift_amount
+      offset = offset(date)
+        shift_value = key.zip(offset)
+          shift_amount = shift_value.map do |num|
+             num.sum
+          end
   end
 
   # takes key as arg and returns an array of ints that
@@ -42,7 +41,7 @@ class Enigma
       loop do
         if string.size >= 2
           string_keys << string[0] + string[1]
-          string = string[1..-1]
+            string = string[1..-1]
         else
           break
         end
