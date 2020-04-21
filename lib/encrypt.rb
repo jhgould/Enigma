@@ -1,12 +1,13 @@
 require 'date'
 require './lib/enigma'
 
-key = "82648"
-date = "240818"
-
 enigma = Enigma.new
+
+key = enigma.key
+date = enigma.date
+
 handle = File.open(ARGV[0], "r")
-incoming_text = handle.read.chomp
+incoming_text = handle.read.chomp.downcase
 encrypted_msg = enigma.encrypt(incoming_text, key, date)
 writer = File.open(ARGV[1], "w")
 writer.write(encrypted_msg[:encryption])
