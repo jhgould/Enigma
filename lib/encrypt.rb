@@ -15,5 +15,4 @@ writer.close
 
 p "Created 'encrypted.txt' with the key #{key} and date #{date}"
 
-
 #ruby lib/encrypt.rb lib/encrypt_message.txt lib/encrypted.txt

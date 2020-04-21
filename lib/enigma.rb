@@ -8,8 +8,8 @@ class Enigma
     @key = keys
   end
 
-# creates a 5 digit key and then converts them into strings
-#so that they can be turned into an array
+  # creates a 5 digit key and then converts them into strings
+  #so that they can be turned into an array
 
   def keys
     key = 5.times.map do |num|
@@ -63,8 +63,8 @@ class Enigma
   def shift_array_generator(string, key, date)
     index_values = []
     shift_amount = shift(key, date)
-    scan_string = string.split('').join(',').split(",")
-      scan_string.each do |character|
+    string_array = string.split('').join(',').split(",")
+      string_array.each do |character|
           index_values << @character_set.find_index(character)
       end
       index_values
@@ -96,22 +96,20 @@ class Enigma
     encrypted_word.join
   end
 
-  def decrypt_message(string, encription_array)
-    encrypted_word = []
-    string_array = string.split('').join(',').split(",")
-    # encription_array = encrypt(string, key, date)
-      encription_array.each do |index|
-        nc = @character_set.rotate(index)
-        encrypted_word << nc[0]
-      end
-    encrypted_word.join
+  def decrypt(message, key, date = @date)
+    shift = shift_array_generator_decrypt(message, key, date)
+    decrypted_message = decrypt_message(message, shift)
+    decrypted_enigma_code = {decryption: decrypted_message,
+      key: key,
+      date: date}
   end
+
 
   def shift_array_generator_decrypt(string, key, date)
     index_values = []
     shift_amount = shift(key, date)
-    scan_string = string.split('').join(',').split(",")
-      scan_string.each do |character|
+    string_array = string.split('').join(',').split(",")
+      string_array.each do |character|
           index_values << @character_set.find_index(character)
       end
       index_values
@@ -129,11 +127,14 @@ class Enigma
       full_shift_amount
   end
 
-  def decrypt(message, key, date = @date)
-          shift = shift_array_generator_decrypt(message, key, date)
-            decrypted_message = decrypt_message(message, shift)
-    decrypted_enigma_code = {decryption: decrypted_message,
-                             key: key,
-                             date: date}
+  def decrypt_message(string, encription_array)
+    encrypted_word = []
+    string_array = string.split('').join(',').split(",")
+    # encription_array = encrypt(string, key, date)
+    encription_array.each do |index|
+      nc = @character_set.rotate(index)
+      encrypted_word << nc[0]
+    end
+    encrypted_word.join
   end
 end
