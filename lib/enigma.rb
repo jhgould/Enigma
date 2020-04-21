@@ -63,8 +63,8 @@ class Enigma
   def shift_array_generator(string, key, date)
     index_values = []
     shift_amount = shift(key, date)
-    scan_string = string.split('').join(',').split(",")
-      scan_string.each do |character|
+    string_array = string.split('').join(',').split(",")
+      string_array.each do |character|
           index_values << @character_set.find_index(character)
       end
       index_values
@@ -110,8 +110,8 @@ class Enigma
   def shift_array_generator_decrypt(string, key, date)
     index_values = []
     shift_amount = shift(key, date)
-    scan_string = string.split('').join(',').split(",")
-      scan_string.each do |character|
+    string_array = string.split('').join(',').split(",")
+      string_array.each do |character|
           index_values << @character_set.find_index(character)
       end
       index_values
