@@ -53,6 +53,11 @@ class EnigmaTest < Minitest::Test
     assert_equal array, @enigma.shift_array_generator("hello world", "02715", "040895")
   end
 
+  def test_it_has_working_decrypting_shift_array_generator
+    array = [7, -23, -70, -16, 14, -1, -59, -13, 17, -16, -51]
+    assert_equal array, @enigma.shift_array_generator_decrypt("keder ohulw", "02715", "040895")
+  end
+
   def test_it_can_decrypt
     decrypt = {:decryption=>"hello world", :key=>"02715", :date=>"040895"}
     assert_equal decrypt, @enigma.decrypt("keder ohulw", "02715", "040895")
